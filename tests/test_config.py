@@ -83,7 +83,7 @@ def test_default_config(test_config: Settings, test_database_path: str) -> None:
             "default_color": "#004578",
             "metadata_always_expanded": True,
             "movement_mode": "adjacent",
-            "append_mode": "top",
+            "append_mode": "bottom",
         },
         "backend": {
             "mode": "sqlite",

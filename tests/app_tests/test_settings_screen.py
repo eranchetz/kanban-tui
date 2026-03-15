@@ -114,19 +114,19 @@ async def test_task_append_mode(test_app: KanbanTui):
             "Controls where tasks are inserted when moved across columns."
         )
 
-        assert pilot.app.config.task.append_mode == TaskAppendModes.TOP
-        assert (
-            pilot.app.screen.query_exactly_one("#select_append_mode", Select).value
-            == TaskAppendModes.TOP
-        )
-
-        await pilot.click("#select_append_mode")
-        await pilot.press("down")
-        await pilot.press("enter")
         assert pilot.app.config.task.append_mode == TaskAppendModes.BOTTOM
         assert (
             pilot.app.screen.query_exactly_one("#select_append_mode", Select).value
             == TaskAppendModes.BOTTOM
+        )
+
+        await pilot.click("#select_append_mode")
+        await pilot.press("up")
+        await pilot.press("enter")
+        assert pilot.app.config.task.append_mode == TaskAppendModes.TOP
+        assert (
+            pilot.app.screen.query_exactly_one("#select_append_mode", Select).value
+            == TaskAppendModes.TOP
         )
         assert pilot.app.needs_refresh
 

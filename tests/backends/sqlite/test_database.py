@@ -261,7 +261,7 @@ def test_update_task_status_to_non_finish_column_keeps_append_behavior(
     assert [task.task_id for task in tasks_b] == [task3.task_id, task1.task_id]
 
 
-def test_update_task_status_to_finish_column_inserts_at_top_by_default(
+def test_update_task_status_to_finish_column_inserts_at_top_when_configured(
     test_database_path,
 ):
     init_new_db(database=test_database_path)
@@ -340,6 +340,45 @@ def test_update_task_status_to_finish_column_appends_when_configured(
         append_mode=TaskAppendModes.BOTTOM,
         database=test_database_path,
     )
+
+    tasks_a = get_task_by_column_db(column_id=column_a, database=test_database_path)
+    tasks_b = get_task_by_column_db(
+        column_id=finish_column, database=test_database_path
+    )
+
+    assert [task.task_id for task in tasks_a] == [task2.task_id]
+    assert tasks_a[0].position == 0
+    assert [task.task_id for task in tasks_b] == [task3.task_id, task1.task_id]
+
+
+def test_update_task_status_to_finish_column_appends_by_default(test_database_path):
+    init_new_db(database=test_database_path)
+    board = create_new_board_db(
+        name="Move Finish Column Board Default Bottom",
+        icon=":trackball:",
+        database=test_database_path,
+    )
+    columns = get_all_columns_on_board_db(
+        database=test_database_path, board_id=board.board_id
+    )
+    column_a = columns[0].column_id
+    finish_column = columns[2].column_id
+
+    task1 = create_new_task_db(
+        title="Task A1", description="", column=column_a, database=test_database_path
+    )
+    task2 = create_new_task_db(
+        title="Task A2", description="", column=column_a, database=test_database_path
+    )
+    task3 = create_new_task_db(
+        title="Task B1",
+        description="",
+        column=finish_column,
+        database=test_database_path,
+    )
+
+    task1.column = finish_column
+    update_task_status_db(task=task1, database=test_database_path)
 
     tasks_a = get_task_by_column_db(column_id=column_a, database=test_database_path)
     tasks_b = get_task_by_column_db(

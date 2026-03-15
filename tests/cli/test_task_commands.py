@@ -509,7 +509,7 @@ def test_task_move_success(test_app):
 
     moved_task = test_app.backend.get_task_by_id(task_id=task_id)
     assert moved_task.column == target_column
-    assert moved_task.position == 0
+    assert moved_task.position == 1
 
 
 def test_task_move_to_finish_column_uses_append_mode(test_app):
@@ -528,7 +528,7 @@ def test_task_move_to_finish_column_uses_append_mode(test_app):
 
     moved_task = test_app.backend.get_task_by_id(task_id=task_id)
     assert moved_task.column == target_column
-    assert moved_task.position == 0
+    assert moved_task.position == 1
 
 
 def test_task_move_fail_task_already_in_column(test_app):
@@ -639,7 +639,7 @@ def test_task_move_to_other_board_finish_column_uses_append_mode(test_app):
     moved_task = test_app.backend.get_task_by_id(task_id=task_id)
     assert moved_task is not None
     assert moved_task.column == target_column
-    assert moved_task.position == 0
+    assert moved_task.position == 1
 
 
 def test_task_move_confirm_task_not_active_board(test_app):

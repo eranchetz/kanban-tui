@@ -47,7 +47,7 @@ class TaskSettings(BaseModel):
     always_expanded: bool = Field(default=False)
     metadata_always_expanded: bool = Field(default=True)
     movement_mode: MovementModes = Field(default=MovementModes("adjacent"))
-    append_mode: TaskAppendModes = Field(default=TaskAppendModes("top"))
+    append_mode: TaskAppendModes = Field(default=TaskAppendModes("bottom"))
 
 
 class JqlEntry(BaseModel):
